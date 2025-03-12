@@ -7,18 +7,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user
-RUN useradd -m -u 1000 mcp
 
 # Copy project files
-COPY pyproject.toml README.md ./
+COPY pyproject.toml requirements.txt README.md ./
 COPY ./src ./src
 
 # Install dependencies and project
-RUN pip install --no-cache-dir -e .
-
-# Switch to non-root user
-USER mcp
+RUN pip install -r requirements.txt
+RUN pip install -e .
 
 # Environment variables
 ENV PYTHONUNBUFFERED=1
@@ -31,4 +27,4 @@ ENV AWS_REGION=ap-south-1
 # EXPOSE 8080
 
 # Set the entrypoint to run the MCP server
-ENTRYPOINT ["python", "-m", "mcp_server_aws.server"]
+CMD ["uv", "run", "mcp-server-aws"]
