@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "A Model Context Protocol server providing tools to read and manipulate AWS resources using an LLM"
 readme = "README.md"
 requires-python = ">=3.10"
-[project]
 dynamic = ["dependencies"]
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
